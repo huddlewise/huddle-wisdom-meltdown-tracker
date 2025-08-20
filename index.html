@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huddle Wisdom Meltdown Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@2.0.0/dist/chartjs-chart-matrix.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>Huddle Wisdom Meltdown Tracker</h1>
+    </header>
+
+    <main>
+        <section id="dashboard">
+            <h2>Dashboard</h2>
+            <p>Your Meltdown Heatmap provides a visual overview of emotional storms to help you identify patterns and address root causes.</p>
+            <div id="heatmap-container">
+                <canvas id="meltdown-heatmap"></canvas>
+            </div>
+        </section>
+
+        <section id="logbook-form">
+            <h2>Log a Meltdown</h2>
+            <form id="meltdown-form">
+                <label for="date-time">Date & Time:</label>
+                <input type="datetime-local" id="date-time" required>
+
+                <label for="intensity">Intensity:</label>
+                <select id="intensity" required>
+                    <option value="1">Mild</option>
+                    <option value="2">Moderate</option>
+                    <option value="3">Severe</option>
+                </select>
+
+                <label for="triggers">Triggers & Context:</label>
+                <textarea id="triggers" rows="4" placeholder="What seemed to set off the meltdown?" required></textarea>
+
+                <label for="behaviors">Behaviors:</label>
+                <textarea id="behaviors" rows="4" placeholder="What did your child do?" required></textarea>
+
+                <button type="submit">Log Meltdown</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Huddle Wisdom</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
