@@ -150,6 +150,7 @@ const renderHeatmap = () => {
 
 // Event listener for form submission
 document.getElementById('meltdown-form').addEventListener('submit', (event) => {
+    // Prevent the form from submitting and refreshing the page
     event.preventDefault();
 
     const dateTime = document.getElementById('date-time').value;
