@@ -71,3 +71,12 @@ button:hover {
     background-color: #e0e6e9;
     border-radius: 8px;
 }
+
+#reset-button {
+    background-color: #d9534f;
+    margin-top: 1rem;
+}
+
+#reset-button:hover {
+    background-color: #c9302c;
+}
