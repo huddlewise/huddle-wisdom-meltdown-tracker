@@ -153,3 +153,16 @@ document.getElementById('meltdown-form').addEventListener('submit', (event) => {
 });
 
 window.onload = renderHeatmap;
+
+document.getElementById('reset-button').addEventListener('click', () => {
+    // Clear all data from localStorage
+    localStorage.clear();
+    
+    // Reset the meltdowns array to be empty
+    meltdowns = [];
+    
+    // Rerender the heatmap to show a blank state
+    renderHeatmap();
+    
+    alert('App has been reset. All meltdown data has been cleared.');
+});
