@@ -11,20 +11,16 @@ const processDataForHeatmap = () => {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const heatmapData = [];
 
-    // Aggregate meltdown intensity for each day and hour
     meltdowns.forEach(meltdown => {
         const date = new Date(meltdown.dateTime);
         const dayIndex = date.getDay();
         const hour = date.getHours();
 
-        // Check if a data point for this day/hour already exists
         let dataPoint = heatmapData.find(d => d.x === dayIndex && d.y === hour);
         
         if (dataPoint) {
-            // If it exists, sum the intensity values
             dataPoint.v += parseInt(meltdown.intensity);
         } else {
-            // If it doesn't exist, create a new one
             heatmapData.push({
                 x: dayIndex,
                 y: hour,
@@ -36,18 +32,15 @@ const processDataForHeatmap = () => {
     return heatmapData;
 };
 
-// Initial chart instance, will be populated on window load
 let myChart = null;
 
-// Function to create and render the heatmap
 const renderHeatmap = () => {
     const processedData = processDataForHeatmap();
     
-    // Define the colors for the heatmap
     const colors = {
-        mild: '#6a8d9e', // Mild
-        moderate: '#f4c742', // Moderate
-        severe: '#d9534f' // Severe
+        mild: '#6a8d9e',
+        moderate: '#f4c742',
+        severe: '#d9534f'
     };
 
     const datasets = [{
@@ -55,8 +48,8 @@ const renderHeatmap = () => {
         data: processedData.map(d => ({
             x: d.x,
             y: d.y,
-            v: d.v, // Add the intensity value to the data point
-            r: d.v * 10 // Use intensity to control the size of the point
+            v: d.v,
+            r: d.v * 10
         })),
         backgroundColor: processedData.map(d => {
             if (d.v > 2) return colors.severe;
@@ -68,18 +61,14 @@ const renderHeatmap = () => {
         borderWidth: 1,
     }];
     
-    // If a chart already exists, update its data
     if (myChart) {
         myChart.data.datasets = datasets;
         myChart.update();
     } else {
-        // Otherwise, create a new chart
         const ctx = document.getElementById('meltdown-heatmap').getContext('2d');
         myChart = new Chart(ctx, {
-            type: 'scatter', // Use scatter plot as a robust alternative
-            data: {
-                datasets: datasets,
-            },
+            type: 'scatter',
+            data: { datasets: datasets },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
@@ -109,13 +98,8 @@ const renderHeatmap = () => {
                                 return dayLabels[value];
                             }
                         },
-                        grid: {
-                            display: false
-                        },
-                        title: {
-                            display: true,
-                            text: 'Day of the Week'
-                        }
+                        grid: { display: false },
+                        title: { display: true, text: 'Day of the Week' }
                     },
                     y: {
                         type: 'linear',
@@ -124,23 +108,16 @@ const renderHeatmap = () => {
                         reverse: true,
                         ticks: {
                             stepSize: 1,
-                            callback: function(value) {
-                                return `${value}:00`;
-                            }
+                            callback: function(value) { return `${value}:00`; }
                         },
-                        grid: {
-                            display: false
-                        },
-                        title: {
-                            display: true,
-                            text: 'Time of Day'
-                        }
+                        grid: { display: false },
+                        title: { display: true, text: 'Time of Day' }
                     }
                 },
                 elements: {
                     point: {
-                        pointStyle: 'rect', // Make the points square to look like a heatmap
-                        radius: ({raw}) => raw.v * 10, // Dynamic size based on intensity
+                        pointStyle: 'rect',
+                        radius: ({raw}) => raw.v * 10,
                     }
                 }
             }
@@ -148,9 +125,7 @@ const renderHeatmap = () => {
     }
 };
 
-// Event listener for form submission
 document.getElementById('meltdown-form').addEventListener('submit', (event) => {
-    // Prevent the form from submitting and refreshing the page
     event.preventDefault();
 
     const dateTime = document.getElementById('date-time').value;
@@ -173,13 +148,8 @@ document.getElementById('meltdown-form').addEventListener('submit', (event) => {
 
     meltdowns.push(newMeltdown);
     saveMeltdowns();
-
-    // Rerender the heatmap with the new data
     renderHeatmap();
-
-    // Reset the form for a new entry
     event.target.reset();
 });
 
-// Initial render of the heatmap when the page loads
 window.onload = renderHeatmap;
